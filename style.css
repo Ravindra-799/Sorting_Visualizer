@@ -1,0 +1,22 @@
+label{
+   color: white;
+}
+li{
+   margin: 5px 20px 0 20px;
+}
+input,select{
+   cursor: pointer;
+   cursor: allowed; 
+}
+body{
+   background-color: lightgreen;
+}
+#array-space{
+   width: 100%;
+   padding: 20px;
+   display: flex;
+}
+#color{
+display:flex;
+float:right;
+}

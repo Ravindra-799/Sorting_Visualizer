@@ -1,0 +1,141 @@
+<!-- 
+      Author @Ravindra Reddy
+      Email : venkataravindra799@gmail.com 
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sorting Visualizer</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="./images/logo.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+   
+  </head>
+  <body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <img src="./images/logo.png" width="30" height="30" alt="" style="margin-right: 10px;" id="logo">
+
+      <h1 class="navbar-brand"> <span style="color: coral;">SORT</span>ING VISUALIZER</h1>
+
+
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+         <ul class="navbar-nav mr-auto mt-2 mt-lg-0 d-md-inline-flex">
+
+            <li class="nav-item" style=" padding-top: 10px;">
+               <button class="btn btn-outline-primary my-2 my-sm-1" data-toggle="tooltip" title="Generates a Random Array" type="submit" id="new-array"> <i class="fa fa-random" aria-hidden="true"></i> Random</button>
+               <button class="btn btn-outline-primary my-2 my-sm-1" data-toggle="modal" data-target="#exampleModalCenter"  type="submit" id="custom-array"> <i class="fa fa-pencil" aria-hidden="true"></i> Custom</button>
+            </li>
+
+            <li class="nav-item" style=" padding-top: 5px;">
+               <div class="form-group">
+                  <label for="formControlRange" id="Asize">Size</label>
+                  <input type="range" class="form-control-range input" min="2" max="300" value="0" data-toggle="tooltip" title="Size of the Array" id="size-array">
+               </div>
+            </li>
+
+
+            <li class="nav-item" style=" padding-top: 5px;">
+               <div class="form-group">
+                  <label for="formControlRange" id="Aspeed">Animation</label>
+                  <input type="range" min="0" max="5" value="4" step="1" class="form-control-range" id="speed" data-toggle="tooltip" title="Speed of the Animation">
+                </div>
+            </li>
+
+
+            <li class="nav-item" style=" padding-top: 10px;">
+               <select class="custom-select" id="algo" data-toggle="tooltip" title="List of Algorithms">
+                  <option value="merge">Merge Sort</option>
+                  <option value="quick">Quick Sort</option>
+                  <option value="heap">Heap Sort</option>
+                  <option value="bubble">Bubble Sort</option>
+                  <option value="selection">Selection Sort</option>
+                  <option value="insertion">Insertion Sort</option>
+                  <option value="radix">Radix Sort</option>
+                  <option value="shell">Shell Sort</option>
+                  <option value="count">Count Sort</option>
+                </select>
+            </li>
+         </ul>
+         <button class="btn btn-outline-success my-5 mx-1 my-md-0" type="submit" id="run-button"><i class="fa fa-play" aria-hidden="true"> </i>  RUN ALGO!</button>
+         <button class="btn btn-outline-warning my-5 mx-1 my-md-0" type="submit" id="skip-button" style="margin-left: 15px;"><i class="fa fa-fast-forward" aria-hidden="true"> </i>  SKIP!</button>
+      </div>
+   </nav>
+
+   <!-- <div class="alert alert-success alert-dismissible fade show mx-md-5 mt-2" role="alert">
+      <strong>Finally Sorted!</strong> Total Swaps Done to sort the array :  <strong><span id="swaps"> 0</span></strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> -->
+   
+   <div id="array-space">
+   
+   </div> 
+   <div id="color"><pre>Skyblue--->It represents given input Elements.
+Yellow----->It picks the elements for Comparison.
+Red------->Compare the Elements and performs Swapping.
+Green----->It represents the sorted order of Elements.
+
+   </pre></div>
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content bg-light">
+         <div class="modal-header">
+            <h4 class="modal-title mx-auto text-success" id="exampleModalCenterTitle">Input the Desired Array</h4>
+         </div>
+         <div class="modal-body">
+            <form>
+               <div class="form-group">
+                  <label for="modal-size" class="col-form-label text-info">Size of Array:</label>
+                  <input type="text" class="form-control" id="modal-size">
+                  <div class="text-danger" id="size-error"></div>
+                  <small class="form-text text-muted">* Size Should be in Range (1 - 300)</small>
+               </div>
+               <div class="form-group">
+                  <label for="modal-text" class="col-form-label text-info">Elements of Array:</label>
+                  <textarea class="form-control" id="modal-text"></textarea>
+                  <div class="text-danger" id="text-error"></div>
+                  <small class="form-text text-muted">* Enter space seperated integers ,Total of above size.</small>
+                  <small class="form-text text-muted">* For better Visibility each interger is of range (1 - 550).</small>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="modal-save">Save changes</button>
+         </div>
+      </div>
+   </div>
+   </div>
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <script src="./sort_algorithms/Merge.js"></script>
+    <script src="./sort_algorithms/Quick.js"></script>
+    <script src="./sort_algorithms/Heap.js"></script>
+    <script src="./sort_algorithms/Bubble.js"></script>
+    <script src="./sort_algorithms/Insertion.js"></script>
+    <script src="./sort_algorithms/Selection.js"></script>
+    <script src="./sort_algorithms/Count.js"></script>
+    <script src="./sort_algorithms/Radix.js"></script>
+    <script src="./sort_algorithms/Shell.js"></script>
+  </body>
+</html>
